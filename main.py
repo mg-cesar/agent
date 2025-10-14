@@ -1,4 +1,8 @@
+import os
+from dotenv import load_dotenv
 from langchain_community.llms import OpenAI
+
+load_dotenv()
 
 class Main:
     def __init__(self):
