@@ -2,6 +2,9 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 
+from agents.gift_agent import GiftAgent
+from agents.travel_agent import TravelAgent
+
 load_dotenv()
 
 class Main:
@@ -32,31 +35,21 @@ class Main:
             max_tokens=max_tokens
         )
 
-    def test_connection(self):
-        """
-        Prueba la conexión con la API de OpenAI.
-        """
-        messages = [
-            (
-                "system",
-                "Eres un asistente útil que busca los mejores regalos",
-            ),
-            (
-                "human",
-                "¿Qué me recomiendas regalar a una persona que le gusta el senderismo?"
-            ),
-        ]
-        
-        try:
-            response = self.llm.invoke(messages)
-            print("Respuesta de Langchain:", response.content)
-        except Exception as e:
-            print(f"Error al conectar con la API: {e}")
-
 if __name__ == "__main__":
     try:
         main = Main()
-        main.test_connection()
+        print("Elige el agente:")
+        print("1. Buscar regalos")
+        print("2. Buscar actividades en un viaje")
+        opcion = input("Introduce 1 o 2: ")
+        if opcion == "1":
+            agente = GiftAgent(main.llm)
+            print(agente.buscar_regalos())
+        elif opcion == "2":
+            agente = TravelAgent(main.llm)
+            print(agente.buscar_actividades())
+        else:
+            print("Opción no válida.")
     except ValueError as e:
         print(f"Error de configuración: {e}")
     except Exception as e:
