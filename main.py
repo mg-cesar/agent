@@ -4,6 +4,7 @@ from langchain_openai import ChatOpenAI
 
 from agents.gift_agent import GiftAgent
 from agents.travel_agent import TravelAgent
+from models.persona import Persona
 
 load_dotenv()
 
@@ -44,13 +45,14 @@ if __name__ == "__main__":
         opcion = input("Introduce 1 o 2: ")
         if opcion == "1":
             agente = GiftAgent(main.llm)
-            print(agente.buscar_regalos(
-                aficiones=["Running", "Decoración"],
-                genero="Femenino",
+            persona = Persona(
                 edad=27,
-                historico_regalos=["Cámara de fotos", "Zapatillas deportivas"],
-                presupuesto=100
-            ))
+                genero="Femenino",
+                aficiones=["Running", "Decoración"],
+                historico_regalos=["Cámara de fotos", "Zapatillas deportivas"]
+            )
+            presupuesto = 100
+            print(agente.buscar_regalos(persona, presupuesto))
         elif opcion == "2":
             agente = TravelAgent(main.llm)
             print(agente.buscar_actividades())
