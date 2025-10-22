@@ -44,7 +44,13 @@ if __name__ == "__main__":
         opcion = input("Introduce 1 o 2: ")
         if opcion == "1":
             agente = GiftAgent(main.llm)
-            print(agente.buscar_regalos())
+            print(agente.buscar_regalos(
+                aficiones=["Running", "Decoración"],
+                genero="Femenino",
+                edad=27,
+                historico_regalos=["Cámara de fotos", "Zapatillas deportivas"],
+                presupuesto=100
+            ))
         elif opcion == "2":
             agente = TravelAgent(main.llm)
             print(agente.buscar_actividades())
